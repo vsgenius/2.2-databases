@@ -1,0 +1,17 @@
+venv/
+.venv/
+*.env
+.mypy_cache/
+.pytest_cache/
+.coverage
+.idea/
+__pycache__/
+data/
+static/
+media/
+logs/
+*.sqlite3
+*.db
+db.json
+celerybeat-schedule
+_dumps
