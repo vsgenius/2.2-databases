@@ -18,13 +18,23 @@ class Article(models.Model):
 
 class Tag(models.Model):
     name = models.TextField(max_length=256, verbose_name='Название')
+    articles = models.ManyToManyField(Article,
+                                      through='ArticleScope',
+                                      through_fields=('tag', 'article'),
+                                      )
 
     class Meta:
         verbose_name = 'Раздел'
         verbose_name_plural = 'Разделы'
 
+    def __str__(self):
+        return self.name
+
 
 class ArticleScope(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='scopes', )
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='scopes')
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE, related_name='Positions', verbose_name='Раздел')
-    main = models.BooleanField(verbose_name='Основной')
+    is_main = models.BooleanField(verbose_name='Основной')
+
+    class Meta:
+        ordering = ['-is_main','tag']
